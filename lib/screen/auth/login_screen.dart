@@ -1,18 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/auth_banner.dart';
 import 'package:vacay_tix/widgets/custom_form_field.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool passwordObscureText = true;
@@ -29,35 +27,14 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-
-  String? nameValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your name';
-    } else if (value.length < 3) {
-      return 'Name must be at least 3 characters';
-    }
-    return null;
-  }
 
   String? usernameValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your username';
     } else if (value.length < 3) {
       return 'Username must be at least 3 characters';
-    }
-    return null;
-  }
-
-  String? emailValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    } else if (!value.contains('@') || !value.contains('.')) {
-      return 'Please enter a valid email';
     }
     return null;
   }
@@ -71,15 +48,6 @@ class _RegisterPageState extends State<RegisterPage> {
     return null;
   }
 
-  String? confirmPasswordValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please confirm your password';
-    } else if (value != passwordController.text) {
-      return 'Passwords do not match';
-    }
-    return null;
-  }
-
   void submit() {
     if (_formKey.currentState!.validate()) {
       print('Form submitted');
@@ -88,11 +56,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
-    nameController.dispose();
     usernameController.dispose();
-    emailController.dispose();
     passwordController.dispose();
-    confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -101,12 +66,18 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        toolbarHeight: 0.0,
       ),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            AuthBanner(),
+            AuthBanner(
+              title: 'Login',
+              subtitle: 'Login to VacayTix Today!',
+              image: 'assets/images/login.jpg',
+              isLoginRoute: true,
+            ),
             Container(
               margin: EdgeInsets.all(32),
               child: Form(
@@ -114,27 +85,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   children: [
                     CustomFormField(
-                      controller: nameController,
-                      validator: nameValidator,
-                      keyboardType: TextInputType.name,
-                      hintText: 'Name',
-                      prefixIcon: Icons.person_outline,
-                    ),
-                    SizedBox(height: 16),
-                    CustomFormField(
                       controller: usernameController,
                       validator: usernameValidator,
                       keyboardType: TextInputType.name,
                       hintText: 'Username',
                       prefixIcon: Icons.alternate_email,
-                    ),
-                    SizedBox(height: 16),
-                    CustomFormField(
-                      controller: emailController,
-                      validator: emailValidator,
-                      keyboardType: TextInputType.emailAddress,
-                      hintText: 'Email',
-                      prefixIcon: Icons.email_outlined,
                     ),
                     SizedBox(height: 16),
                     CustomFormField(
@@ -154,28 +109,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16),
-                    CustomFormField(
-                      obscureText: confirmPasswordObscureText,
-                      controller: confirmPasswordController,
-                      validator: confirmPasswordValidator,
-                      keyboardType: TextInputType.visiblePassword,
-                      hintText: 'Confirm Password',
-                      prefixIcon: Icons.password_outlined,
-                      suffixIcon: IconButton(
-                        onPressed: toggleConfirmPasswordObscureText,
-                        icon: Icon(
-                          confirmPasswordObscureText
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                          color: CustomColors.mulberry,
-                        ),
-                      ),
-                    ),
                     SizedBox(height: 32),
                     ElevatedButton(
                       onPressed: submit,
-                      child: Text('Register'.toUpperCase()),
+                      child: Text('login'.toUpperCase()),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 50),
                         shape: RoundedRectangleBorder(

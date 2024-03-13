@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vacay_tix/screen/auth/register_page.dart';
+import 'package:vacay_tix/screen/auth/login_screen.dart';
+import 'package:vacay_tix/screen/auth/register_screen.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 
 void main() {
@@ -19,7 +20,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: RegisterPage(),
+      routes: {
+        '/login': (context) => LoginScreen(),
+        '/register': (context) => RegisterScreen(),
+      },
+      home: LoginScreen(),
     );
   }
 }
