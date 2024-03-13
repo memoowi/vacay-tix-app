@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             AuthBanner(
               title: 'Login',
-              subtitle: 'Login to VacayTix Today!',
+              subtitle: 'VacayTix? Ready, Set, Explore!',
               image: 'assets/images/login.jpg',
               isLoginRoute: true,
             ),
