@@ -56,6 +56,8 @@ class _RegisterPageState extends State<RegisterPage> {
   String? emailValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
+    } else if (!value.contains('@') || !value.contains('.')) {
+      return 'Please enter a valid email';
     }
     return null;
   }
@@ -63,8 +65,8 @@ class _RegisterPageState extends State<RegisterPage> {
   String? passwordValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
-    } else if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+    } else if (value.length < 8) {
+      return 'Password must be at least 8 characters';
     }
     return null;
   }
@@ -76,6 +78,12 @@ class _RegisterPageState extends State<RegisterPage> {
       return 'Passwords do not match';
     }
     return null;
+  }
+
+  void submit() {
+    if (_formKey.currentState!.validate()) {
+      print('Form submitted');
+    }
   }
 
   @override
@@ -166,7 +174,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     SizedBox(height: 32),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: submit,
                       child: Text('Register'.toUpperCase()),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 50),

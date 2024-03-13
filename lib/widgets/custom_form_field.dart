@@ -48,6 +48,12 @@ class CustomFormField extends StatelessWidget {
             width: 2,
           ),
         ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Colors.red,
+          ),
+        ),
       ),
       style: TextStyle(
         color: CustomColors.mulberry,
