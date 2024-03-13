@@ -38,6 +38,9 @@ class CustomFormField extends StatelessWidget {
         prefixIcon: Icon(prefixIcon),
         prefixIconColor: CustomColors.mulberry,
         suffixIcon: suffixIcon,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -46,12 +49,6 @@ class CustomFormField extends StatelessWidget {
           borderSide: BorderSide(
             color: CustomColors.mulberry,
             width: 2,
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Colors.red,
           ),
         ),
       ),
