@@ -38,6 +38,11 @@ class CustomFormField extends StatelessWidget {
         prefixIcon: Icon(prefixIcon),
         prefixIconColor: CustomColors.mulberry,
         suffixIcon: suffixIcon,
+        filled: true,
+        fillColor: CustomColors.white.withOpacity(0.4),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
