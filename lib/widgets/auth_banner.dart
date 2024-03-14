@@ -26,7 +26,7 @@ class AuthBanner extends StatelessWidget {
           fit: BoxFit.cover,
         ),
         Positioned(
-          top: 0,
+          top: 10,
           right: 0,
           child: SafeArea(
             child: Container(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vacay_tix/bloc/auth_bloc.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/auth_banner.dart';
 import 'package:vacay_tix/widgets/custom_filled_button.dart';
@@ -51,9 +53,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void submit() {
     if (_formKey.currentState!.validate()) {
-      print('Form submitted');
+      context.read<AuthBloc>().add(
+            LoginEvent(
+                username: usernameController.text,
+                password: passwordController.text),
+          );
     }
-    Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+    // Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
   }
 
   @override

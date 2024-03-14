@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vacay_tix/bloc/auth_bloc.dart';
 import 'package:vacay_tix/screen/auth/login_screen.dart';
 import 'package:vacay_tix/screen/auth/register_screen.dart';
 import 'package:vacay_tix/screen/discover_screen.dart';
@@ -12,7 +14,15 @@ import 'package:vacay_tix/screen/tours_screen.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => AuthBloc()..add(SetInitialAuthEvent())),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -50,7 +60,15 @@ class MyApp extends StatelessWidget {
         '/qr_code_view': (context) => QRCodeViewScreen(),
         '/tour_details': (context) => TourDetailsScreen(),
       },
-      home: HomeScreen(),
+      home: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is AuthSuccess) {
+            return HomeScreen();
+          } else {
+            return LoginScreen();
+          }
+        },
+      ),
     );
   }
 }

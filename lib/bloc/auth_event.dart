@@ -5,10 +5,7 @@ sealed class AuthEvent {}
 
 class AuthInitialEvent extends AuthEvent {}
 
-class SetInitialAuthEvent extends AuthEvent {
-  final String token;
-  SetInitialAuthEvent({required this.token});
-}
+class SetInitialAuthEvent extends AuthEvent {}
 
 class LoginEvent extends AuthEvent {
   final String username;
@@ -30,18 +27,3 @@ class RegisterEvent extends AuthEvent {
 }
 
 class LogoutEvent extends AuthEvent {}
-
-class CheckTokenValidityEvent extends AuthEvent {
-  final String token;
-  CheckTokenValidityEvent({required this.token});
-}
-
-// class AuthErrorEvent extends AuthEvent {
-//   final String message;
-//   AuthErrorEvent({required this.message});
-// }
-
-// class AuthSuccessEvent extends AuthEvent {
-//   final AuthModel authModel;
-//   AuthSuccessEvent({required this.authModel});
-// }

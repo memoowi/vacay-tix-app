@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vacay_tix/bloc/auth_bloc.dart';
 import 'package:vacay_tix/screen/home_pages/history_page.dart';
 import 'package:vacay_tix/screen/home_pages/my_ticket_page.dart';
 import 'package:vacay_tix/screen/home_pages/todo_section.dart';
@@ -39,8 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/login', (route) => false);
+              context.read<AuthBloc>().add(LogoutEvent());
+              // Navigator.pushNamedAndRemoveUntil(
+              //     context, '/login', (route) => false);
             },
             icon: Icon(Icons.logout),
             tooltip: 'logout',
