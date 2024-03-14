@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 

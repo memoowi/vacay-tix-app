@@ -29,7 +29,9 @@ class DiscoverScreen extends StatelessWidget {
           child: Column(
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, '/tour_details');
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     color: CustomColors.chestnut,

@@ -240,7 +240,17 @@ class TicketDetailsScreen extends StatelessWidget {
               SizedBox(height: 20),
               CustomFilledButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/qr_code_view');
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/qr_code_view',
+                    (Route<dynamic> route) {
+                      if (route.isFirst) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    },
+                  );
                 },
                 label: 'Generate QR Code',
               ),
