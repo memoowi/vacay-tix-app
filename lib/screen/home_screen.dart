@@ -38,7 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('VacayTix,\nHi, User!'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/login', (route) => false);
+            },
             icon: Icon(Icons.logout),
             tooltip: 'logout',
           ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 
-class CustomFilledButton extends StatelessWidget {
+class CustomOutlineButton extends StatelessWidget {
   final Function()? onPressed;
   final String label;
-  const CustomFilledButton({
+  const CustomOutlineButton({
     super.key,
     this.onPressed,
     required this.label,
@@ -19,9 +19,12 @@ class CustomFilledButton extends StatelessWidget {
         minimumSize: Size(double.infinity, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
+          side: BorderSide(color: CustomColors.mulberry, width: 2.0),
         ),
-        backgroundColor: CustomColors.mulberry,
-        foregroundColor: CustomColors.white,
+        elevation: 0.0,
+        shadowColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        foregroundColor: CustomColors.mulberry,
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:vacay_tix/screen/pending_screen.dart';
 import 'package:vacay_tix/screen/paid_screen.dart';
 import 'package:vacay_tix/screen/qr_code_view_screen.dart';
 import 'package:vacay_tix/screen/ticket_details_screen.dart';
+import 'package:vacay_tix/screen/tour_details_screen.dart';
 import 'package:vacay_tix/screen/tours_screen.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         '/get_qr': (context) => PaidScreen(),
         '/details': (context) => TicketDetailsScreen(),
         '/qr_code_view': (context) => QRCodeViewScreen(),
+        '/tour_details': (context) => TourDetailsScreen(),
       },
       home: HomeScreen(),
     );
