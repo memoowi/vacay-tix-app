@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:vacay_tix/screen/auth/login_screen.dart';
 import 'package:vacay_tix/screen/auth/register_screen.dart';
+import 'package:vacay_tix/screen/discover_screen.dart';
 import 'package:vacay_tix/screen/home_screen.dart';
+import 'package:vacay_tix/screen/pending_screen.dart';
+import 'package:vacay_tix/screen/qr_code_screen.dart';
+import 'package:vacay_tix/screen/qr_code_view_screen.dart';
+import 'package:vacay_tix/screen/ticket_details_screen.dart';
+import 'package:vacay_tix/screen/tours_screen.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 
 void main() {
@@ -35,6 +41,12 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
         '/home': (context) => HomeScreen(),
+        '/discover': (context) => DiscoverScreen(),
+        '/tours': (context) => ToursScreen(),
+        '/pending': (context) => PendingScreen(),
+        '/qr_code': (context) => QRCodeScreen(),
+        '/details': (context) => TicketDetailsScreen(),
+        '/qr_code_view': (context) => QRCodeViewScreen(),
       },
       home: HomeScreen(),
     );

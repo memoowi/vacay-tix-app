@@ -18,7 +18,7 @@ class MyTicketsPage extends StatelessWidget {
             tileColor: CustomColors.white.withOpacity(0.3),
             splashColor: CustomColors.eggshell,
             dense: true,
-            leading: Icon(Icons.tour, color: CustomColors.coral),
+            leading: Icon(Icons.confirmation_num, color: CustomColors.coral),
             title: Text(
               'Booking ID: 123456789',
             ),

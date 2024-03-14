@@ -19,7 +19,8 @@ class HistoryPage extends StatelessWidget {
             tileColor: CustomColors.white.withOpacity(0.3),
             splashColor: CustomColors.eggshell,
             dense: true,
-            leading: Icon(Icons.outlined_flag_sharp, color: CustomColors.coral),
+            leading: Icon(Icons.confirmation_num_outlined,
+                color: CustomColors.coral),
             title: Text(
               'Booking ID: 123456789',
             ),

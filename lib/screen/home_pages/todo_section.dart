@@ -23,22 +23,30 @@ class ToDo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TodoButton(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/discover');
+            },
             icon: Icons.search,
             label: 'Discover',
           ),
           TodoButton(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/tours');
+            },
             icon: Icons.tour,
             label: 'Tour',
           ),
           TodoButton(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/pending');
+            },
             icon: Icons.wallet_outlined,
             label: 'Pending',
           ),
           TodoButton(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/qr_code');
+            },
             icon: Icons.qr_code,
             label: 'QR Code',
           ),
