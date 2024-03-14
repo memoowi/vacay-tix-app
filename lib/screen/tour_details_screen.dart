@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/custom_filled_button.dart';
 import 'package:vacay_tix/widgets/custom_modal_bottom.dart';
@@ -153,7 +154,11 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
                       SizedBox(width: 5),
                       Expanded(
                         child: Text(
-                          'Rp 100.000',
+                          NumberFormat.currency(
+                            locale: 'id',
+                            symbol: 'IDR ',
+                            decimalDigits: 0,
+                          ).format(25000),
                           style: TextStyle(
                             color: CustomColors.mulberry,
                             fontSize: 16,

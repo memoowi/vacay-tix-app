@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 
 class DiscoverScreen extends StatelessWidget {
@@ -99,7 +100,11 @@ class DiscoverScreen extends StatelessWidget {
                                   SizedBox(width: 5),
                                   Expanded(
                                     child: Text(
-                                      'Rp 100.000',
+                                      NumberFormat.currency(
+                                        locale: 'id',
+                                        symbol: 'IDR ',
+                                        decimalDigits: 0,
+                                      ).format(25000),
                                       style: TextStyle(
                                         color: CustomColors.white,
                                         fontSize: 16,

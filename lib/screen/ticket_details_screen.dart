@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/custom_filled_button.dart';
+import 'package:vacay_tix/widgets/custom_outline_button.dart';
 
 class TicketDetailsScreen extends StatelessWidget {
   const TicketDetailsScreen({super.key});
@@ -61,7 +63,7 @@ class TicketDetailsScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    'Booking Date: 24 Apr 2022',
+                    'Booking Date: ${DateFormat('EEE, dd MMM yyyy').format(DateTime.now())}',
                     style: TextStyle(
                       color: CustomColors.mulberry,
                     ),
@@ -213,7 +215,7 @@ class TicketDetailsScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    '24 Apr 2022',
+                    '${DateFormat('EEE, dd MMM yyyy').format(DateTime.now())}',
                     style: TextStyle(
                       color: CustomColors.mulberry,
                     ),
@@ -230,7 +232,11 @@ class TicketDetailsScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    'Rp 2.000.000',
+                    NumberFormat.currency(
+                      locale: 'id',
+                      symbol: 'IDR ',
+                      decimalDigits: 0,
+                    ).format(200000),
                     style: TextStyle(
                       color: CustomColors.mulberry,
                     ),
@@ -253,6 +259,28 @@ class TicketDetailsScreen extends StatelessWidget {
                   );
                 },
                 label: 'Generate QR Code',
+              ),
+              SizedBox(height: 10),
+              CustomFilledButton(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/qr_code_view',
+                    (Route<dynamic> route) {
+                      if (route.isFirst) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    },
+                  );
+                },
+                label: 'View QR Code',
+              ),
+              SizedBox(height: 10),
+              CustomOutlineButton(
+                onPressed: () {},
+                label: 'Cancel Booking',
               ),
             ],
           ),
