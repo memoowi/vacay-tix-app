@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 
-class QRCodeScreen extends StatelessWidget {
-  const QRCodeScreen({super.key});
+class PaidScreen extends StatelessWidget {
+  const PaidScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +39,8 @@ class QRCodeScreen extends StatelessWidget {
                 tileColor: CustomColors.white.withOpacity(0.3),
                 splashColor: CustomColors.eggshell,
                 dense: true,
-                leading: Icon(Icons.confirmation_num_outlined,
-                    color: CustomColors.coral),
+                leading:
+                    Icon(CupertinoIcons.ticket_fill, color: CustomColors.coral),
                 title: Text(
                   'Booking ID: 123456789',
                 ),

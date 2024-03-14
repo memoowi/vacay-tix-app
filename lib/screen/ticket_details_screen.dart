@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
+import 'package:vacay_tix/widgets/custom_filled_button.dart';
 
 class TicketDetailsScreen extends StatelessWidget {
   const TicketDetailsScreen({super.key});
@@ -237,19 +238,11 @@ class TicketDetailsScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 20),
-              ElevatedButton(
+              CustomFilledButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/qr_code_view');
                 },
-                child: Text('Generate QR Code'.toUpperCase()),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  backgroundColor: CustomColors.mulberry,
-                  foregroundColor: CustomColors.white,
-                ),
+                label: 'Generate QR Code',
               ),
             ],
           ),

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/todo_button.dart';
@@ -26,29 +27,29 @@ class ToDo extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, '/discover');
             },
-            icon: Icons.search,
+            icon: CupertinoIcons.compass_fill,
             label: 'Discover',
           ),
           TodoButton(
             onTap: () {
               Navigator.pushNamed(context, '/tours');
             },
-            icon: Icons.tour,
+            icon: Icons.landscape,
             label: 'Tour',
           ),
           TodoButton(
             onTap: () {
               Navigator.pushNamed(context, '/pending');
             },
-            icon: Icons.wallet_outlined,
+            icon: CupertinoIcons.tickets_fill,
             label: 'Pending',
           ),
           TodoButton(
             onTap: () {
-              Navigator.pushNamed(context, '/qr_code');
+              Navigator.pushNamed(context, '/get_qr');
             },
-            icon: Icons.qr_code,
-            label: 'QR Code',
+            icon: CupertinoIcons.qrcode,
+            label: 'Get QR',
           ),
         ],
       ),

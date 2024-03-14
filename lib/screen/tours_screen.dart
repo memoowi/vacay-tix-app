@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 
 class ToursScreen extends StatelessWidget {
@@ -49,11 +49,11 @@ class ToursScreen extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(height: 4),
+                            SizedBox(height: 8),
                             Row(
                               children: [
                                 Icon(
-                                  Icons.location_on,
+                                  CupertinoIcons.map_pin_ellipse,
                                   color: CustomColors.mulberry,
                                 ),
                                 SizedBox(width: 5),
@@ -70,7 +70,7 @@ class ToursScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 4),
+                            SizedBox(height: 8),
                             Row(
                               children: [
                                 Icon(
@@ -91,11 +91,11 @@ class ToursScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 4),
+                            SizedBox(height: 8),
                             Row(
                               children: [
                                 Icon(
-                                  Icons.info_outlined,
+                                  CupertinoIcons.info,
                                   color: CustomColors.mulberry,
                                 ),
                                 SizedBox(width: 5),

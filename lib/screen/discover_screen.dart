@@ -62,13 +62,13 @@ class DiscoverScreen extends StatelessWidget {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              SizedBox(height: 4),
+                              SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    Icons.location_on,
+                                    CupertinoIcons.map_pin_ellipse,
                                     color: CustomColors.mulberry,
                                   ),
                                   SizedBox(width: 5),
@@ -85,7 +85,7 @@ class DiscoverScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 4),
+                              SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,

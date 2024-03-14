@@ -21,6 +21,7 @@ class QRCodeViewScreen extends StatelessWidget {
                 data:
                     'dd51024d750c1d95df530cdb78201a7e64e7f22571c87b55b3e6b730d19030af',
                 version: 8,
+                errorCorrectionLevel: QrErrorCorrectLevel.Q,
                 eyeStyle: QrEyeStyle(
                   eyeShape: QrEyeShape.square,
                   color: CustomColors.terracotta,
@@ -28,6 +29,26 @@ class QRCodeViewScreen extends StatelessWidget {
                 size: 320,
                 backgroundColor: CustomColors.white,
                 padding: EdgeInsets.all(20),
+                embeddedImage: AssetImage(
+                  'assets/logo/logo-1-filled.png',
+                ),
+                embeddedImageStyle: QrEmbeddedImageStyle(
+                  size: Size(70, 70),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'VacayTix - Scan QR code at the entrance.',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Code Access: dd51024d750c1d95df530cdb78201a7e64e7f22571c87b55b3e6b730d19030af',
+              style: TextStyle(
+                fontSize: 14,
               ),
             ),
           ],
