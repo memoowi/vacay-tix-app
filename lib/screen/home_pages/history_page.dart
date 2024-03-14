@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
@@ -12,15 +13,16 @@ class HistoryPage extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/details');
+            },
             shape: RoundedRectangleBorder(
               side: BorderSide(color: CustomColors.mulberry),
             ),
             tileColor: CustomColors.white.withOpacity(0.3),
             splashColor: CustomColors.eggshell,
             dense: true,
-            leading: Icon(Icons.confirmation_num_outlined,
-                color: CustomColors.coral),
+            leading: Icon(CupertinoIcons.ticket, color: CustomColors.coral),
             title: Text(
               'Booking ID: 123456789',
             ),

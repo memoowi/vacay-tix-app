@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/auth_banner.dart';
+import 'package:vacay_tix/widgets/custom_filled_button.dart';
 import 'package:vacay_tix/widgets/custom_form_field.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -176,17 +177,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     SizedBox(height: 32),
-                    ElevatedButton(
+                    CustomFilledButton(
                       onPressed: submit,
-                      child: Text('Register'.toUpperCase()),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        backgroundColor: CustomColors.mulberry,
-                        foregroundColor: CustomColors.eggshell,
-                      ),
+                      label: 'Register',
                     ),
                   ],
                 ),

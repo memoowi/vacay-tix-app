@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/auth_banner.dart';
+import 'package:vacay_tix/widgets/custom_filled_button.dart';
 import 'package:vacay_tix/widgets/custom_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -110,17 +111,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     SizedBox(height: 32),
-                    ElevatedButton(
+                    CustomFilledButton(
                       onPressed: submit,
-                      child: Text('login'.toUpperCase()),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        backgroundColor: CustomColors.mulberry,
-                        foregroundColor: CustomColors.eggshell,
-                      ),
+                      label: 'Login',
                     ),
                   ],
                 ),

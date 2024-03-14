@@ -29,7 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.temple_hindu_sharp),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: Image.asset(
+            'assets/logo/logo-2.png',
+          ),
+        ),
         title: Text('VacayTix,\nHi, User!'),
         actions: [
           IconButton(

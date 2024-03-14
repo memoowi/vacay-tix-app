@@ -4,7 +4,7 @@ import 'package:vacay_tix/screen/auth/register_screen.dart';
 import 'package:vacay_tix/screen/discover_screen.dart';
 import 'package:vacay_tix/screen/home_screen.dart';
 import 'package:vacay_tix/screen/pending_screen.dart';
-import 'package:vacay_tix/screen/qr_code_screen.dart';
+import 'package:vacay_tix/screen/paid_screen.dart';
 import 'package:vacay_tix/screen/qr_code_view_screen.dart';
 import 'package:vacay_tix/screen/ticket_details_screen.dart';
 import 'package:vacay_tix/screen/tours_screen.dart';
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         '/discover': (context) => DiscoverScreen(),
         '/tours': (context) => ToursScreen(),
         '/pending': (context) => PendingScreen(),
-        '/qr_code': (context) => QRCodeScreen(),
+        '/get_qr': (context) => PaidScreen(),
         '/details': (context) => TicketDetailsScreen(),
         '/qr_code_view': (context) => QRCodeViewScreen(),
       },
