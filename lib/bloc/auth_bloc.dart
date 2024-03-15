@@ -1,29 +1,31 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vacay_tix/models/auth_model.dart';
 import 'package:vacay_tix/models/user_model.dart';
 import 'package:vacay_tix/utils/config.dart';
+import 'package:vacay_tix/utils/custom_snack_bar.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthInitial()) {
+  AuthBloc() : super(AuthInitialState()) {
     on<SetInitialAuthEvent>((event, emit) async {
-      String? _token = await getToken();
-      if (_token != null) {
-        UserModel? user = await checkTokenValidity(_token);
-        // print('user: $user, token: $_token');
+      String? token = await getToken();
+      if (token != null) {
+        UserModel? user = await checkTokenValidity(token);
+        // print('user: $user, token: $token');
         if (user != null) {
-          emit(AuthSuccess(_token, user));
+          emit(AuthenticatedState(token, user));
         } else {
           deleteToken();
-          emit(AuthError('Invalid token'));
+          emit(UnauthenticatedState());
         }
       } else {
-        emit(AuthInitial());
+        emit(UnauthenticatedState());
       }
     });
 
@@ -37,26 +39,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           'password': password,
         });
 
-        // print('Login Response: ${response.statusCode} ${response.data}');
-
         if (response.statusCode == 200) {
           String token = AuthModel.fromJson(response.data).accessToken!;
           UserModel? user = await checkTokenValidity(token);
-          if (user != null) {
+          if (user != null && event.context.mounted) {
+            CustomSnackBar.show(
+              message: 'Login Success',
+              type: Type.success,
+              context: event.context,
+            );
             saveToken(token);
-            emit(AuthSuccess(token, user));
-          } else {
-            emit(AuthError('Invalid token'));
+            emit(AuthenticatedState(token, user));
           }
         }
       } on DioException catch (e) {
         // print(e);
-        if (e.response?.statusCode == 401 || e.response?.statusCode == 404) {
-          String message = AuthModel.fromJson(e.response?.data).message!;
-          emit(AuthError(message));
-        } else {
-          emit(AuthError(e.toString()));
+        final errorMessage =
+            e.response?.statusCode == 401 || e.response?.statusCode == 404
+                ? AuthModel.fromJson(e.response?.data).message!
+                : 'Login Failed';
+
+        if (event.context.mounted) {
+          CustomSnackBar.show(
+            message: errorMessage,
+            type: Type.error,
+            context: event.context,
+          );
         }
+        emit(UnauthenticatedState());
       }
     });
 
@@ -79,9 +89,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           UserModel? user = await checkTokenValidity(token);
           if (user != null) {
             saveToken(token);
-            emit(AuthSuccess(token, user));
+            emit(AuthenticatedState(token, user));
           } else {
-            emit(AuthError('Invalid token'));
+            emit(UnauthenticatedState());
           }
         }
       } on DioException catch (e) {
@@ -90,10 +100,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           var messages = e.response?.data['message'].toList();
 
           for (var message in messages!) {
-            emit(AuthError(message));
+            emit(UnauthenticatedState());
           }
         } else {
-          emit(AuthError(e.toString()));
+          emit(UnauthenticatedState());
         }
       }
     });
@@ -111,13 +121,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
 
         if (response.statusCode == 200) {
+          if (event.context.mounted) {
+            CustomSnackBar.show(
+              message: 'Logout Success',
+              type: Type.success,
+              context: event.context,
+            );
+          }
           deleteToken();
-          emit(AuthInitial());
+          emit(UnauthenticatedState());
         }
       } on DioException {
         // emit(AuthError(e.toString()));
+        if (event.context.mounted) {
+          CustomSnackBar.show(
+            message: 'An error occurred.',
+            type: Type.error,
+            context: event.context,
+          );
+        }
         deleteToken();
-        emit(AuthInitial());
+        emit(UnauthenticatedState());
       }
     });
   }

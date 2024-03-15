@@ -10,7 +10,8 @@ class SetInitialAuthEvent extends AuthEvent {}
 class LoginEvent extends AuthEvent {
   final String username;
   final String password;
-  LoginEvent({required this.username, required this.password});
+  final BuildContext context;
+  LoginEvent({required this.username, required this.password, required this.context});
 }
 
 class RegisterEvent extends AuthEvent {
@@ -26,4 +27,8 @@ class RegisterEvent extends AuthEvent {
       required this.password});
 }
 
-class LogoutEvent extends AuthEvent {}
+class LogoutEvent extends AuthEvent {
+  final BuildContext context;
+
+  LogoutEvent({required this.context});
+}

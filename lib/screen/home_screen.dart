@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vacay_tix/bloc/auth_bloc.dart';
 import 'package:vacay_tix/screen/home_pages/history_page.dart';
 import 'package:vacay_tix/screen/home_pages/my_ticket_page.dart';
 import 'package:vacay_tix/screen/home_pages/todo_section.dart';
+import 'package:vacay_tix/widgets/custom_alert_logout.dart';
 import 'package:vacay_tix/widgets/home_list_button.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -41,7 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              context.read<AuthBloc>().add(LogoutEvent());
+              showDialog(
+                context: context,
+                builder: (builder) {
+                  return CustomAlertLogout();
+                },
+              );
               // Navigator.pushNamedAndRemoveUntil(
               //     context, '/login', (route) => false);
             },

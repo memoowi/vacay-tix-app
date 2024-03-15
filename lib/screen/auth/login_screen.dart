@@ -56,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
       context.read<AuthBloc>().add(
             LoginEvent(
                 username: usernameController.text,
-                password: passwordController.text),
+                password: passwordController.text,
+                context: context),
           );
     }
     // Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);

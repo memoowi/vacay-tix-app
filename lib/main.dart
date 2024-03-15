@@ -18,7 +18,9 @@ void main() {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => AuthBloc()..add(SetInitialAuthEvent())),
+          create: (context) =>
+              AuthBloc()..add(SetInitialAuthEvent()),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -62,7 +64,7 @@ class MyApp extends StatelessWidget {
       },
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          if (state is AuthSuccess) {
+          if (state is AuthenticatedState) {
             return HomeScreen();
           } else {
             return LoginScreen();
