@@ -194,7 +194,7 @@ class User {
 class Payment {
   int? id;
   int? bookingId;
-  String? paymentDate;
+  DateTime? paymentDate;
   String? paymentMethod;
   int? amount;
   String? createdAt;
@@ -212,7 +212,7 @@ class Payment {
   Payment.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     bookingId = json['booking_id'];
-    paymentDate = json['payment_date'];
+    paymentDate = DateTime.parse(json['payment_date']);
     paymentMethod = json['payment_method'];
     amount = json['amount'];
     createdAt = json['created_at'];

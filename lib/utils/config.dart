@@ -7,4 +7,5 @@ class Config {
   static const String userUrl = "$baseApiUrl/user";
 
   static const String bookingUrl = "$baseApiUrl/bookings";
+  static const String bookingDetailsUrl = "$baseApiUrl/bookings/details";
 }
