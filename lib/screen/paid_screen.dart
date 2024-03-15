@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vacay_tix/bloc/booking_list_bloc.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/dot_ticket_tile.dart';
 
@@ -7,6 +9,7 @@ class PaidScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<BookingListBloc>().add(RefreshBookingListEvent());
     return Scaffold(
       appBar: AppBar(
         title: Text('QR Code Generator'.toUpperCase()),
@@ -29,14 +32,46 @@ class PaidScreen extends StatelessWidget {
                 color: CustomColors.mulberry,
                 thickness: 2.0,
               ),
-              DotTicketTile(
-                onTap: () {
-                  Navigator.pushNamed(context, '/details');
+              BlocBuilder<BookingListBloc, BookingListState>(
+                builder: (context, state) {
+                  if (state is BookingListLoadedState) {
+                    final filteredData = state.bookingList.data!.where(
+                        (element) =>
+                            element.status == 'confirmed' &&
+                            element.qrCode == null);
+                    if (filteredData.isEmpty) {
+                      return Center(
+                        child: Text('No Tickets found'),
+                      );
+                    }
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: filteredData.length,
+                      itemBuilder: (context, index) {
+                        final data = filteredData.elementAt(index);
+                        return DotTicketTile(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/details');
+                          },
+                          bookingId: data.id!,
+                          tourName: data.tour!.name!,
+                          bookingDate: data.bookingDate!,
+                          isPaid: true,
+                        );
+                      },
+                    );
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: CustomColors.terracotta,
+                        ),
+                      ),
+                    );
+                  }
                 },
-                bookingId: 123456789,
-                tourName: 'Rinjani',
-                bookingDate: DateTime(2022, 4, 25),
-                isPaid: true,
               ),
             ],
           ),

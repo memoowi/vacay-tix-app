@@ -218,4 +218,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       return null;
     }
   }
+
+  Future<UserModel?> getUser() async {
+    String? token = await getToken();
+
+    if (token != null) {
+      UserModel? user = await checkTokenValidity(token);
+
+      if (user != null) {
+        return user;
+      }
+    }
+
+    return null;
+  }
 }

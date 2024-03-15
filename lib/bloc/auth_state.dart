@@ -12,6 +12,8 @@ class AuthenticatedState extends AuthState {
   final UserModel user;
 
   AuthenticatedState(this.token, this.user);
+
+  UserModel get getUser => user;
 }
 
 class UnauthenticatedState extends AuthState {}
