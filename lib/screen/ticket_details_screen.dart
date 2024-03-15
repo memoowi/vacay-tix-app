@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vacay_tix/bloc/booking_bloc.dart';
 import 'package:vacay_tix/bloc/booking_list_bloc.dart';
 import 'package:vacay_tix/bloc/qr_bloc.dart';
 import 'package:vacay_tix/bloc/ticket_details_bloc.dart';
@@ -58,13 +59,6 @@ class TicketDetailsScreen extends StatelessWidget {
                               Navigator.pushNamed(
                                 context,
                                 '/qr_code_view',
-                                // (Route<dynamic> route) {
-                                //   if (route.settings.name == '/home') {
-                                //     return true;
-                                //   } else {
-                                //     return false;
-                                //   }
-                                // },
                               );
                               context.read<QrBloc>().add(GenerateQrCode(
                                   bookingId: data.id!, context: context));
@@ -100,7 +94,19 @@ class TicketDetailsScreen extends StatelessWidget {
                     SizedBox(height: 10),
                     data.status == 'pending'
                         ? CustomOutlineButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context
+                                  .read<BookingBloc>()
+                                  .add(CancelBookingEvent(
+                                    bookingId: data.id!,
+                                    context: context,
+                                  ));
+                              context.read<TicketDetailsBloc>().add(
+                                  LoadTicketDetailsEvent(bookingId: data.id!));
+                              context
+                                  .read<BookingListBloc>()
+                                  .add(RefreshBookingListEvent());
+                            },
                             label: 'Cancel Booking',
                           )
                         : Container(),
