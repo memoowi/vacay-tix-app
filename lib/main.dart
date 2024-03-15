@@ -8,6 +8,7 @@ import 'package:vacay_tix/screen/home_screen.dart';
 import 'package:vacay_tix/screen/pending_screen.dart';
 import 'package:vacay_tix/screen/paid_screen.dart';
 import 'package:vacay_tix/screen/qr_code_view_screen.dart';
+import 'package:vacay_tix/screen/splash_screen.dart';
 import 'package:vacay_tix/screen/ticket_details_screen.dart';
 import 'package:vacay_tix/screen/tour_details_screen.dart';
 import 'package:vacay_tix/screen/tours_screen.dart';
@@ -18,8 +19,7 @@ void main() {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              AuthBloc()..add(SetInitialAuthEvent()),
+          create: (context) => AuthBloc()..add(SetInitialAuthEvent()),
         ),
       ],
       child: const MyApp(),
@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       routes: {
+        // '/': (context) => SplashScreen(),
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
         '/home': (context) => HomeScreen(),
@@ -62,14 +63,23 @@ class MyApp extends StatelessWidget {
         '/qr_code_view': (context) => QRCodeViewScreen(),
         '/tour_details': (context) => TourDetailsScreen(),
       },
-      home: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
+      home: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
           if (state is AuthenticatedState) {
-            return HomeScreen();
-          } else {
-            return LoginScreen();
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/home',
+              (route) => false,
+            );
+          } else if (state is UnauthenticatedState) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/login',
+              (route) => false,
+            );
           }
         },
+        child: SplashScreen(),
       ),
     );
   }

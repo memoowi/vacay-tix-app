@@ -34,6 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       String password = event.password;
 
       try {
+        emit(AuthLoadingState());
         final response = await dio.post(Config.loginUrl, data: {
           'username': username,
           'password': password,

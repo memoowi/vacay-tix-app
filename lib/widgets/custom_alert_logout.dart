@@ -15,7 +15,8 @@ class CustomAlertLogout extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is! AuthenticatedState) {
-          Navigator.pop(context);
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/login', (route) => false);
         }
       },
       child: AlertDialog(
@@ -33,14 +34,23 @@ class CustomAlertLogout extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          CustomFilledButton(
-            label: 'Logout',
-            onPressed: () {
-              context.read<AuthBloc>().add(
-                    LogoutEvent(
-                      context: context,
-                    ),
-                  );
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              if (state is AuthLoadingState) {
+                return CustomFilledButton(
+                  label: 'Logout',
+                );
+              }
+              return CustomFilledButton(
+                label: 'Logout',
+                onPressed: () {
+                  context.read<AuthBloc>().add(
+                        LogoutEvent(
+                          context: context,
+                        ),
+                      );
+                },
+              );
             },
           ),
         ],
