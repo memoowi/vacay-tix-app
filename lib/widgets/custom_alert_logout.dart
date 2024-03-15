@@ -14,7 +14,7 @@ class CustomAlertLogout extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is! AuthenticatedState) {
+        if (state is UnauthenticatedState) {
           Navigator.pushNamedAndRemoveUntil(
               context, '/login', (route) => false);
         }
@@ -36,20 +36,18 @@ class CustomAlertLogout extends StatelessWidget {
           ),
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              if (state is AuthLoadingState) {
-                return CustomFilledButton(
-                  label: 'Logout',
-                );
-              }
+              final isLoading = state is AuthLoadingState;
               return CustomFilledButton(
                 label: 'Logout',
-                onPressed: () {
-                  context.read<AuthBloc>().add(
-                        LogoutEvent(
-                          context: context,
-                        ),
-                      );
-                },
+                onPressed: !isLoading
+                    ? () {
+                        context.read<AuthBloc>().add(
+                              LogoutEvent(
+                                context: context,
+                              ),
+                            );
+                      }
+                    : null,
               );
             },
           ),

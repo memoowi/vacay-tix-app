@@ -126,13 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 32),
                       BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
-                          if (state is AuthLoadingState) {
-                            return CustomFilledButton(
-                              label: 'Login',
-                            );
-                          }
+                          final isLoading = state is AuthLoadingState;
                           return CustomFilledButton(
-                            onPressed: submit,
+                            onPressed: isLoading ? null : submit,
                             label: 'Login',
                           );
                         },

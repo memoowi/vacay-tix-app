@@ -46,8 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   return CustomAlertLogout();
                 },
               );
-              // Navigator.pushNamedAndRemoveUntil(
-              //     context, '/login', (route) => false);
             },
             icon: Icon(Icons.logout),
             tooltip: 'logout',

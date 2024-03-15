@@ -11,7 +11,11 @@ class LoginEvent extends AuthEvent {
   final String username;
   final String password;
   final BuildContext context;
-  LoginEvent({required this.username, required this.password, required this.context});
+  LoginEvent({
+    required this.username,
+    required this.password,
+    required this.context,
+  });
 }
 
 class RegisterEvent extends AuthEvent {
@@ -19,12 +23,15 @@ class RegisterEvent extends AuthEvent {
   final String username;
   final String email;
   final String password;
+  final BuildContext context;
 
-  RegisterEvent(
-      {required this.name,
-      required this.username,
-      required this.email,
-      required this.password});
+  RegisterEvent({
+    required this.name,
+    required this.username,
+    required this.email,
+    required this.password,
+    required this.context,
+  });
 }
 
 class LogoutEvent extends AuthEvent {

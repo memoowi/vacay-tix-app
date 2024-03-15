@@ -78,6 +78,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       String password = event.password;
 
       try {
+        emit(AuthLoadingState());
         final response = await dio.post(Config.registerUrl, data: {
           'name': name,
           'username': username,
@@ -88,22 +89,49 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (response.statusCode == 201) {
           String token = AuthModel.fromJson(response.data).accessToken!;
           UserModel? user = await checkTokenValidity(token);
-          if (user != null) {
+          if (user != null && event.context.mounted) {
+            CustomSnackBar.show(
+              message: 'Register Success',
+              type: Type.success,
+              context: event.context,
+            );
             saveToken(token);
             emit(AuthenticatedState(token, user));
-          } else {
-            emit(UnauthenticatedState());
           }
         }
       } on DioException catch (e) {
-        // STILL CONFUSED
+        // print(e);
         if (e.response?.statusCode == 422) {
-          var messages = e.response?.data['message'].toList();
+          final messages = e.response?.data['message'] as Map<String, dynamic>;
+          // print('messages: $messages');
 
-          for (var message in messages!) {
-            emit(UnauthenticatedState());
-          }
+          messages.forEach((field, errorMessages) {
+            String errorMessage = ''; // Build a combined error message
+
+            // Concatenate error messages for each field
+            for (var message in errorMessages) {
+              errorMessage += '$message';
+            }
+
+            // Show snackbar with specific field and combined messages
+            if (event.context.mounted) {
+              CustomSnackBar.show(
+                message: '$errorMessage', // Combine field and messages
+                type: Type.error,
+                context: event.context,
+              );
+            }
+          });
+
+          emit(UnauthenticatedState());
         } else {
+          if (event.context.mounted) {
+            CustomSnackBar.show(
+              message: 'Register Failed',
+              type: Type.error,
+              context: event.context,
+            );
+          }
           emit(UnauthenticatedState());
         }
       }
@@ -111,6 +139,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<LogoutEvent>((event, emit) async {
       try {
+        emit(AuthLoadingState());
         String? token = await getToken();
         final response = await dio.post(
           Config.logoutUrl,
@@ -133,7 +162,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(UnauthenticatedState());
         }
       } on DioException {
-        // emit(AuthError(e.toString()));
         if (event.context.mounted) {
           CustomSnackBar.show(
             message: 'An error occurred.',
