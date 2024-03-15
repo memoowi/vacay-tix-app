@@ -30,6 +30,7 @@ class HomeListButton extends StatelessWidget {
           style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(),
             foregroundColor: CustomColors.mulberry,
+            disabledForegroundColor: CustomColors.mulberry,
           ),
           child: Text(
             title,
