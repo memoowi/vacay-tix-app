@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vacay_tix/bloc/ticket_details_bloc.dart';
+import 'package:vacay_tix/screen/ticket_details_partials/ticket_details_user_summary_section.dart';
+import 'package:vacay_tix/screen/ticket_details_partials/ticket_info_summary_section.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/custom_filled_button.dart';
 import 'package:vacay_tix/widgets/custom_outline_button.dart';
+import 'package:vacay_tix/screen/ticket_details_partials/ticket_details_payment_summary_section.dart';
 
 class TicketDetailsScreen extends StatelessWidget {
   const TicketDetailsScreen({super.key});
@@ -26,263 +30,81 @@ class TicketDetailsScreen extends StatelessWidget {
               width: 1.4,
             ),
           ),
-          child: Column(
-            children: [
-              Text(
-                'Ticket Summary',
-                style: TextStyle(
-                  color: CustomColors.mulberry,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.confirmation_num,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Booking ID: 123456789',
-                    style: TextStyle(
+          child: BlocBuilder<TicketDetailsBloc, TicketDetailsState>(
+            builder: (context, state) {
+              if (state is TicketDetailsLoadedState) {
+                final data = state.bookingModel.data!;
+                return Column(
+                  children: [
+                    TicketInfoSummarySection(data: data),
+                    SizedBox(height: 10),
+                    Divider(
                       color: CustomColors.mulberry,
                     ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.calendar_month,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Booking Date: ${DateFormat('EEE, dd MMM yyyy').format(DateTime.now())}',
-                    style: TextStyle(
-                      color: CustomColors.mulberry,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.tour,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Booking Tour: Rinjani',
-                    style: TextStyle(
-                      color: CustomColors.mulberry,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.fiber_manual_record,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Status: Confirmed / Paid',
-                    style: TextStyle(
-                      color: CustomColors.mulberry,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Divider(
-                color: CustomColors.mulberry,
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.person,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'User',
-                    style: TextStyle(
-                      color: CustomColors.mulberry,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.male,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Male',
-                    style: TextStyle(
-                      color: CustomColors.mulberry,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.cake,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    '18 Years',
-                    style: TextStyle(
-                      color: CustomColors.mulberry,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.phone,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    '088232220652',
-                    style: TextStyle(
-                      color: CustomColors.mulberry,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Divider(
-                color: CustomColors.mulberry,
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Payment Summary',
-                style: TextStyle(
-                  color: CustomColors.mulberry,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.payment,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Cash',
-                    style: TextStyle(
-                      color: CustomColors.mulberry,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.calendar_month,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    '${DateFormat('EEE, dd MMM yyyy').format(DateTime.now())}',
-                    style: TextStyle(
-                      color: CustomColors.mulberry,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.payments_outlined,
-                    color: CustomColors.coral,
-                    size: 20,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    NumberFormat.currency(
-                      locale: 'id',
-                      symbol: 'IDR ',
-                      decimalDigits: 0,
-                    ).format(200000),
-                    style: TextStyle(
-                      color: CustomColors.mulberry,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 20),
-              CustomFilledButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/qr_code_view',
-                    (Route<dynamic> route) {
-                      if (route.isFirst) {
-                        return true;
-                      } else {
-                        return false;
-                      }
-                    },
-                  );
-                },
-                label: 'Generate QR Code',
-              ),
-              SizedBox(height: 10),
-              CustomFilledButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/qr_code_view',
-                    (Route<dynamic> route) {
-                      if (route.isFirst) {
-                        return true;
-                      } else {
-                        return false;
-                      }
-                    },
-                  );
-                },
-                label: 'View QR Code',
-              ),
-              SizedBox(height: 10),
-              CustomOutlineButton(
-                onPressed: () {},
-                label: 'Cancel Booking',
-              ),
-            ],
+                    SizedBox(height: 10),
+                    TicketDetailsUserSummarySection(data: data),
+                    SizedBox(height: 10),
+                    data.qrCode != null
+                        ? TicketDetailsPaymentSummarySection(
+                            data: data,
+                          )
+                        : Container(),
+                    SizedBox(height: 20),
+                    data.qrCode == null && data.status == 'confirmed'
+                        ? CustomFilledButton(
+                            onPressed: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                '/qr_code_view',
+                                (Route<dynamic> route) {
+                                  if (route.isFirst) {
+                                    return true;
+                                  } else {
+                                    return false;
+                                  }
+                                },
+                              );
+                            },
+                            label: 'Generate QR Code',
+                          )
+                        : Container(),
+                    SizedBox(height: 10),
+                    data.qrCode != null
+                        ? CustomFilledButton(
+                            onPressed: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                '/qr_code_view',
+                                (Route<dynamic> route) {
+                                  if (route.isFirst) {
+                                    return true;
+                                  } else {
+                                    return false;
+                                  }
+                                },
+                              );
+                            },
+                            label: 'View QR Code',
+                          )
+                        : Container(),
+                    SizedBox(height: 10),
+                    data.status == 'pending'
+                        ? CustomOutlineButton(
+                            onPressed: () {},
+                            label: 'Cancel Booking',
+                          )
+                        : Container(),
+                  ],
+                );
+              } else if (state is TicketDetailsLoadingState) {
+                return Center(
+                    child: LinearProgressIndicator(
+                  color: CustomColors.coral,
+                ));
+              } else {
+                return Text('Something went wrong...');
+              }
+            },
           ),
         ),
       ),
