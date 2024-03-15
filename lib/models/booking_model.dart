@@ -139,7 +139,7 @@ class User {
   String? name;
   String? username;
   String? email;
-  Null? emailVerifiedAt;
+  String? emailVerifiedAt;
   String? gender;
   int? age;
   String? phone;
