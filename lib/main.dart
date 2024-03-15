@@ -5,6 +5,7 @@ import 'package:vacay_tix/bloc/booking_bloc.dart';
 import 'package:vacay_tix/bloc/booking_list_bloc.dart';
 import 'package:vacay_tix/bloc/qr_bloc.dart';
 import 'package:vacay_tix/bloc/ticket_details_bloc.dart';
+import 'package:vacay_tix/bloc/tour_list_bloc.dart';
 import 'package:vacay_tix/screen/auth/login_screen.dart';
 import 'package:vacay_tix/screen/auth/register_screen.dart';
 import 'package:vacay_tix/screen/discover_screen.dart';
@@ -36,6 +37,9 @@ void main() {
         ),
         BlocProvider(
           create: (context) => BookingBloc(),
+        ),
+        BlocProvider(
+          create: (context) => TourListBloc(),
         )
       ],
       child: const MyApp(),
