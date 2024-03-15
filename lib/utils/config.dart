@@ -8,4 +8,7 @@ class Config {
 
   static const String bookingUrl = "$baseApiUrl/bookings";
   static const String bookingDetailsUrl = "$baseApiUrl/bookings/details";
+
+  static const String qrCodeUrl = "$baseApiUrl/qr-code";
+  static const String generateQrCodeUrl = "$baseApiUrl/generate-qr-code";
 }
