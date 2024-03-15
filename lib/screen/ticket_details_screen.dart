@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vacay_tix/bloc/booking_list_bloc.dart';
+import 'package:vacay_tix/bloc/qr_bloc.dart';
 import 'package:vacay_tix/bloc/ticket_details_bloc.dart';
 import 'package:vacay_tix/screen/ticket_details_partials/ticket_details_user_summary_section.dart';
 import 'package:vacay_tix/screen/ticket_details_partials/ticket_info_summary_section.dart';
@@ -53,17 +55,27 @@ class TicketDetailsScreen extends StatelessWidget {
                     data.qrCode == null && data.status == 'confirmed'
                         ? CustomFilledButton(
                             onPressed: () {
-                              Navigator.pushNamedAndRemoveUntil(
+                              Navigator.pushNamed(
                                 context,
                                 '/qr_code_view',
-                                (Route<dynamic> route) {
-                                  if (route.isFirst) {
-                                    return true;
-                                  } else {
-                                    return false;
-                                  }
-                                },
+                                // (Route<dynamic> route) {
+                                //   if (route.settings.name == '/home') {
+                                //     return true;
+                                //   } else {
+                                //     return false;
+                                //   }
+                                // },
                               );
+                              context.read<QrBloc>().add(GenerateQrCode(
+                                  bookingId: data.id!, context: context));
+                              context
+                                  .read<QrBloc>()
+                                  .add(LoadQrCode(bookingId: data.id!));
+                              context.read<TicketDetailsBloc>().add(
+                                  LoadTicketDetailsEvent(bookingId: data.id!));
+                              context
+                                  .read<BookingListBloc>()
+                                  .add(RefreshBookingListEvent());
                             },
                             label: 'Generate QR Code',
                           )
@@ -72,17 +84,15 @@ class TicketDetailsScreen extends StatelessWidget {
                     data.qrCode != null
                         ? CustomFilledButton(
                             onPressed: () {
-                              Navigator.pushNamedAndRemoveUntil(
+                              Navigator.pushNamed(
                                 context,
                                 '/qr_code_view',
-                                (Route<dynamic> route) {
-                                  if (route.isFirst) {
-                                    return true;
-                                  } else {
-                                    return false;
-                                  }
-                                },
                               );
+                              context.read<QrBloc>().add(
+                                    LoadQrCode(
+                                      bookingId: data.id!,
+                                    ),
+                                  );
                             },
                             label: 'View QR Code',
                           )
