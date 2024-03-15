@@ -11,4 +11,6 @@ class Config {
 
   static const String qrCodeUrl = "$baseApiUrl/qr-code";
   static const String generateQrCodeUrl = "$baseApiUrl/generate-qr-code";
+
+  static const String tourUrl = "$baseApiUrl/tours";
 }
