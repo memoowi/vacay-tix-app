@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vacay_tix/bloc/auth_bloc.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/auth_banner.dart';
 import 'package:vacay_tix/widgets/custom_filled_button.dart';
@@ -81,9 +83,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void submit() {
     if (_formKey.currentState!.validate()) {
-      print('Form submitted');
+      context.read<AuthBloc>().add(
+            RegisterEvent(
+              name: nameController.text,
+              username: usernameController.text,
+              email: emailController.text,
+              password: passwordController.text,
+              context: context,
+            ),
+          );
     }
-    Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
   }
 
   @override
@@ -98,95 +107,111 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        toolbarHeight: 0.0,
-      ),
-      extendBodyBehindAppBar: true,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            AuthBanner(
-              title: 'Register',
-              subtitle: 'Register for VacayTix Today!',
-              image: 'assets/images/register.jpg',
-            ),
-            Container(
-              margin: EdgeInsets.all(32),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    CustomFormField(
-                      controller: nameController,
-                      validator: nameValidator,
-                      keyboardType: TextInputType.name,
-                      hintText: 'Name',
-                      prefixIcon: Icons.person_outline,
-                    ),
-                    SizedBox(height: 16),
-                    CustomFormField(
-                      controller: usernameController,
-                      validator: usernameValidator,
-                      keyboardType: TextInputType.name,
-                      hintText: 'Username',
-                      prefixIcon: Icons.alternate_email,
-                    ),
-                    SizedBox(height: 16),
-                    CustomFormField(
-                      controller: emailController,
-                      validator: emailValidator,
-                      keyboardType: TextInputType.emailAddress,
-                      hintText: 'Email',
-                      prefixIcon: Icons.email_outlined,
-                    ),
-                    SizedBox(height: 16),
-                    CustomFormField(
-                      obscureText: passwordObscureText,
-                      controller: passwordController,
-                      validator: passwordValidator,
-                      keyboardType: TextInputType.visiblePassword,
-                      hintText: 'Password',
-                      prefixIcon: Icons.lock_outline,
-                      suffixIcon: IconButton(
-                        onPressed: togglePasswordObscureText,
-                        icon: Icon(
-                          passwordObscureText
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                          color: CustomColors.mulberry,
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthenticatedState) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/home',
+            (route) => false,
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          toolbarHeight: 0.0,
+        ),
+        extendBodyBehindAppBar: true,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              AuthBanner(
+                title: 'Register',
+                subtitle: 'Register for VacayTix Today!',
+                image: 'assets/images/register.jpg',
+              ),
+              Container(
+                margin: EdgeInsets.all(32),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomFormField(
+                        controller: nameController,
+                        validator: nameValidator,
+                        keyboardType: TextInputType.name,
+                        hintText: 'Name',
+                        prefixIcon: Icons.person_outline,
+                      ),
+                      SizedBox(height: 16),
+                      CustomFormField(
+                        controller: usernameController,
+                        validator: usernameValidator,
+                        keyboardType: TextInputType.name,
+                        hintText: 'Username',
+                        prefixIcon: Icons.alternate_email,
+                      ),
+                      SizedBox(height: 16),
+                      CustomFormField(
+                        controller: emailController,
+                        validator: emailValidator,
+                        keyboardType: TextInputType.emailAddress,
+                        hintText: 'Email',
+                        prefixIcon: Icons.email_outlined,
+                      ),
+                      SizedBox(height: 16),
+                      CustomFormField(
+                        obscureText: passwordObscureText,
+                        controller: passwordController,
+                        validator: passwordValidator,
+                        keyboardType: TextInputType.visiblePassword,
+                        hintText: 'Password',
+                        prefixIcon: Icons.lock_outline,
+                        suffixIcon: IconButton(
+                          onPressed: togglePasswordObscureText,
+                          icon: Icon(
+                            passwordObscureText
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            color: CustomColors.mulberry,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 16),
-                    CustomFormField(
-                      obscureText: confirmPasswordObscureText,
-                      controller: confirmPasswordController,
-                      validator: confirmPasswordValidator,
-                      keyboardType: TextInputType.visiblePassword,
-                      hintText: 'Confirm Password',
-                      prefixIcon: Icons.password_outlined,
-                      suffixIcon: IconButton(
-                        onPressed: toggleConfirmPasswordObscureText,
-                        icon: Icon(
-                          confirmPasswordObscureText
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                          color: CustomColors.mulberry,
+                      SizedBox(height: 16),
+                      CustomFormField(
+                        obscureText: confirmPasswordObscureText,
+                        controller: confirmPasswordController,
+                        validator: confirmPasswordValidator,
+                        keyboardType: TextInputType.visiblePassword,
+                        hintText: 'Confirm Password',
+                        prefixIcon: Icons.password_outlined,
+                        suffixIcon: IconButton(
+                          onPressed: toggleConfirmPasswordObscureText,
+                          icon: Icon(
+                            confirmPasswordObscureText
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            color: CustomColors.mulberry,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 32),
-                    CustomFilledButton(
-                      onPressed: submit,
-                      label: 'Register',
-                    ),
-                  ],
+                      SizedBox(height: 32),
+                      BlocBuilder<AuthBloc, AuthState>(
+                        builder: (context, state) {
+                          final isLoading = state is AuthLoadingState;
+                          return CustomFilledButton(
+                            onPressed: isLoading ? null : submit,
+                            label: 'Register',
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

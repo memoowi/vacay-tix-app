@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vacay_tix/screen/home_pages/history_page.dart';
 import 'package:vacay_tix/screen/home_pages/my_ticket_page.dart';
 import 'package:vacay_tix/screen/home_pages/todo_section.dart';
+import 'package:vacay_tix/widgets/custom_alert_logout.dart';
 import 'package:vacay_tix/widgets/home_list_button.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -39,8 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/login', (route) => false);
+              showDialog(
+                context: context,
+                builder: (builder) {
+                  return CustomAlertLogout();
+                },
+              );
             },
             icon: Icon(Icons.logout),
             tooltip: 'logout',

@@ -22,6 +22,8 @@ class CustomFilledButton extends StatelessWidget {
         ),
         backgroundColor: CustomColors.mulberry,
         foregroundColor: CustomColors.white,
+        disabledBackgroundColor: CustomColors.mulberry.withOpacity(0.5),
+        disabledForegroundColor: CustomColors.white.withOpacity(0.8),
       ),
     );
   }
