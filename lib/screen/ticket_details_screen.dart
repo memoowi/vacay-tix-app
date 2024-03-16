@@ -93,21 +93,35 @@ class TicketDetailsScreen extends StatelessWidget {
                         : Container(),
                     SizedBox(height: 10),
                     data.status == 'pending'
-                        ? CustomOutlineButton(
-                            onPressed: () {
-                              context
-                                  .read<BookingBloc>()
-                                  .add(CancelBookingEvent(
-                                    bookingId: data.id!,
-                                    context: context,
-                                  ));
-                              context.read<TicketDetailsBloc>().add(
-                                  LoadTicketDetailsEvent(bookingId: data.id!));
-                              context
-                                  .read<BookingListBloc>()
-                                  .add(RefreshBookingListEvent());
+                        ? BlocConsumer<BookingBloc, BookingState>(
+                            listener: (context, state) {
+                              if (state is BookingSuccess) {
+                                context.read<TicketDetailsBloc>().add(
+                                    LoadTicketDetailsEvent(
+                                        bookingId: data.id!));
+                                context
+                                    .read<BookingBloc>()
+                                    .add(ResetBookingEvent());
+                                context
+                                    .read<BookingListBloc>()
+                                    .add(RefreshBookingListEvent());
+                              }
                             },
-                            label: 'Cancel Booking',
+                            builder: (context, state) {
+                              return CustomOutlineButton(
+                                onPressed: (state is BookingLoading)
+                                    ? null
+                                    : () {
+                                        context
+                                            .read<BookingBloc>()
+                                            .add(CancelBookingEvent(
+                                              bookingId: data.id!,
+                                              context: context,
+                                            ));
+                                      },
+                                label: 'Cancel Booking',
+                              );
+                            },
                           )
                         : Container(),
                   ],

@@ -197,9 +197,9 @@ class _TourDetailsScreenState extends State<TourDetailsScreen> {
                               ),
                               builder: (context) {
                                 return CustomModalBottom(
-                                  tour_id: 1,
-                                  tour_name: 'Rinjani',
-                                  tour_price: 25000,
+                                  tourId: data.id!,
+                                  tourName: data.name!,
+                                  tourPrice: data.price!,
                                 );
                               },
                             );
