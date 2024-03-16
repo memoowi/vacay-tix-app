@@ -14,6 +14,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitialState()) {
     on<SetInitialAuthEvent>((event, emit) async {
+      emit(AuthLoadingState());
       String? token = await getToken();
       if (token != null) {
         UserModel? user = await checkTokenValidity(token);
