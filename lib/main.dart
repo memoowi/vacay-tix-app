@@ -90,17 +90,21 @@ class MyApp extends StatelessWidget {
       home: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthenticatedState) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/home',
-              (route) => false,
-            );
+            Future.delayed(Duration(milliseconds: 2000), () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/home',
+                (route) => false,
+              );
+            });
           } else if (state is UnauthenticatedState) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/login',
-              (route) => false,
-            );
+            Future.delayed(Duration(milliseconds: 2000), () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/login',
+                (route) => false,
+              );
+            });
           }
         },
         child: SplashScreen(),

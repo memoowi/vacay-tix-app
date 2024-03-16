@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:vacay_tix/models/booking_model.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
@@ -75,7 +74,7 @@ class TicketDetailsUserSummarySection extends StatelessWidget {
             ),
             SizedBox(width: 10),
             Text(
-              '${data.user!.phone!}',
+              '${data.user!.phone}',
               style: TextStyle(
                 color: CustomColors.mulberry,
               ),

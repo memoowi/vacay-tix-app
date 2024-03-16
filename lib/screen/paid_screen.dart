@@ -45,9 +45,11 @@ class PaidScreen extends StatelessWidget {
                         child: Text('No Tickets found'),
                       );
                     }
-                    return ListView.builder(
+                    return ListView.separated(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: 10),
                       itemCount: filteredData.length,
                       itemBuilder: (context, index) {
                         final data = filteredData.elementAt(index);
