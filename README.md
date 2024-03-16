@@ -1,16 +1,14 @@
-# vacay_tix
+# Vacay Tix FLUTTER APP
 
-A new Flutter project.
+Copyright 2024 - [`memoowi`](https://instagram.com/me_moowi) | All rights reserved
 
-## Getting Started
+> The Vacay Tix API Repository is [`here`](https://github.com/memoowi/vacay-tix-api). The API built using Laravel 10
 
-This project is a starting point for a Flutter application.
+## Documentation
 
-A few resources to get you started if this is your first Flutter project:
+<details>
+    <summary>📄Documentation</summary>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+`COMING SOON`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+</details>
