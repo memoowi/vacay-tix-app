@@ -11,10 +11,12 @@ class CancelBookingEvent extends BookingEvent {
 }
 
 class NewBookingEvent extends BookingEvent {
-  final String tourId;
+  final int tourId;
   final DateTime bookingDate;
   final BuildContext context;
 
   NewBookingEvent(
       {required this.tourId, required this.bookingDate, required this.context});
 }
+
+class ResetBookingEvent extends BookingEvent {}

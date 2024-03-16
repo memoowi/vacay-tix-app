@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:vacay_tix/bloc/booking_bloc.dart';
+import 'package:vacay_tix/bloc/ticket_details_bloc.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
 import 'package:vacay_tix/widgets/custom_filled_button.dart';
 
 class CustomModalBottom extends StatefulWidget {
-  final int tour_id;
-  final String tour_name;
-  final int tour_price;
+  final int tourId;
+  final String tourName;
+  final int tourPrice;
   const CustomModalBottom({
     super.key,
-    required this.tour_id,
-    required this.tour_name,
-    required this.tour_price,
+    required this.tourId,
+    required this.tourName,
+    required this.tourPrice,
   });
 
   @override
@@ -54,7 +57,7 @@ class _CustomModalBottomState extends State<CustomModalBottom> {
           ),
           SizedBox(height: 8),
           Text(
-            widget.tour_name,
+            widget.tourName,
             style: TextStyle(
               color: CustomColors.mulberry,
               fontSize: 20,
@@ -85,8 +88,9 @@ class _CustomModalBottomState extends State<CustomModalBottom> {
                   setState(() {
                     selectedDate = value;
                   });
-                  return controller.text =
+                  final formattedDate =
                       DateFormat('EEEE, dd MMMM yyyy').format(value);
+                  return controller.text = formattedDate;
                 },
               );
             },
@@ -127,7 +131,7 @@ class _CustomModalBottomState extends State<CustomModalBottom> {
                   locale: 'id',
                   symbol: 'IDR ',
                   decimalDigits: 0,
-                ).format(widget.tour_price),
+                ).format(widget.tourPrice),
                 style: TextStyle(
                   color: CustomColors.mulberry,
                   fontSize: 20,
@@ -137,21 +141,36 @@ class _CustomModalBottomState extends State<CustomModalBottom> {
             ],
           ),
           Spacer(),
-          CustomFilledButton(
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/details',
-                (route) {
-                  if (route.isFirst) {
-                    return true;
-                  } else {
-                    return false;
-                  }
-                },
+          BlocConsumer<BookingBloc, BookingState>(
+            listener: (context, state) {
+              if (state is BookingSuccess) {
+                Navigator.pop(context);
+                Navigator.pushNamed(
+                  context,
+                  '/details',
+                );
+                context.read<TicketDetailsBloc>().add(
+                      LoadTicketDetailsEvent(bookingId: state.bookingId),
+                    );
+                context.read<BookingBloc>().add(ResetBookingEvent());
+              }
+            },
+            builder: (context, state) {
+              return CustomFilledButton(
+                onPressed: (state is BookingLoading)
+                    ? null
+                    : () {
+                        context.read<BookingBloc>().add(
+                              NewBookingEvent(
+                                tourId: widget.tourId,
+                                bookingDate: selectedDate,
+                                context: context,
+                              ),
+                            );
+                      },
+                label: 'Buy Ticket',
               );
             },
-            label: 'Buy Ticket',
           ),
           SizedBox(height: 32),
         ],

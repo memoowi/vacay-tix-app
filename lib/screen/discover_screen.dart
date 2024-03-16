@@ -1,8 +1,10 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:vacay_tix/bloc/tour_bloc.dart';
 import 'package:vacay_tix/bloc/tour_list_bloc.dart';
 import 'package:vacay_tix/utils/config.dart';
 import 'package:vacay_tix/utils/custom_colors.dart';
@@ -51,6 +53,9 @@ class DiscoverScreen extends StatelessWidget {
                           return InkWell(
                             onTap: () {
                               Navigator.pushNamed(context, '/tour_details');
+                              context.read<TourBloc>().add(
+                                    LoadTour(tourId: data.id!),
+                                  );
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -62,10 +67,19 @@ class DiscoverScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
-                                    child: Image.network(
-                                      Config.baseUrl + '/' + data.imageUrls![0],
-                                      height: 150,
-                                      fit: BoxFit.cover,
+                                    child: FancyShimmerImage(
+                                      imageUrl: Config.baseUrl +
+                                          '/' +
+                                          data.imageUrls![0],
+                                      height: 180,
+                                      boxFit: BoxFit.cover,
+                                      shimmerBaseColor: CustomColors.chestnut,
+                                      shimmerHighlightColor:
+                                          CustomColors.eggshell,
+                                      errorWidget: Image.asset(
+                                        'assets/images/image-404.jpg',
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                   Expanded(

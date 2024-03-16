@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vacay_tix/models/booking_model.dart';
 import 'package:vacay_tix/utils/config.dart';
 import 'package:vacay_tix/utils/custom_snack_bar.dart';
 
@@ -14,6 +16,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
 
   BookingBloc() : super(BookingInitial()) {
     on<CancelBookingEvent>((event, emit) async {
+      emit(BookingLoading());
       try {
         final token = await getToken();
         final response = await dio.patch(
@@ -34,13 +37,66 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
               type: Type.success,
             );
           }
-          // emit(CancelBookingSuccess());
-        } else {
-          // emit(CancelBookingFailure());
+          emit(BookingSuccess(bookingId: event.bookingId));
         }
       } on DioException catch (e) {
         print(e);
-        // emit(CancelBookingFailure());
+        if (event.context.mounted) {
+          CustomSnackBar.show(
+            context: event.context,
+            message: 'Something went wrong...',
+            type: Type.error,
+          );
+        }
+      }
+    });
+
+    on<ResetBookingEvent>((event, emit) {
+      emit(BookingInitial());
+    });
+
+    on<NewBookingEvent>((event, emit) async {
+      emit(BookingLoading());
+      try {
+        final token = await getToken();
+
+        final response = await dio.post(
+          Config.bookingUrl,
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            },
+          ),
+          data: {
+            "tour_id": event.tourId,
+            "booking_date": event.bookingDate.toString(),
+          },
+        );
+
+        if (response.statusCode == 201) {
+          final data = BookingModel.fromJson(response.data);
+          final bookingId = data.data!.id!;
+          if (event.context.mounted) {
+            CustomSnackBar.show(
+              context: event.context,
+              message: 'Booking Successful',
+              type: Type.success,
+            );
+          }
+
+          emit(BookingSuccess(bookingId: bookingId));
+        }
+      } on DioException catch (e) {
+        print(e);
+        print(e.response!.data);
+        if (event.context.mounted) {
+          CustomSnackBar.show(
+            context: event.context,
+            message: 'Something went wrong...',
+            type: Type.error,
+          );
+        }
+        emit(BookingInitial());
       }
     });
   }
